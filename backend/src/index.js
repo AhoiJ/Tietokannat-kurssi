@@ -30,4 +30,3 @@ app.use(test.allowedMethods());
 app.listen(port);
 
 console.log(`App listening on port ${port}`);
-
