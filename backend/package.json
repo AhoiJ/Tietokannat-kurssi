@@ -5,6 +5,8 @@
   "author": "Jere Aho",
   "license": "MIT",
   "scripts": {
+    "build": "babel src -d build",
+    "start": "node build/index.js",
     "dev": "nodemon src/index.js -w src --exec babel-node",
     "lint:es": "eslint src",
     "test": "yarn lint:es",
