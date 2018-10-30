@@ -130,7 +130,6 @@ todos.get(todosPath, checkAccept, async (ctx) => {
     console.error('Error occurred:', error);
     ctx.throw(500, error);
   }
-
 });
 
 // GET /resource/:id
@@ -156,7 +155,6 @@ todos.get(todoPath, checkAccept, async (ctx) => {
     console.error('Error occurred:', error);
     ctx.throw(500, error);
   }
-
 });
 
 // POST /resource
@@ -200,7 +198,6 @@ todos.post(todosPath, checkAccept, checkContent, koaBody, async (ctx) => {
     console.error('Error occurred:', error);
     ctx.throw(500, error);
   }
-
 });
 
 // PUT /resource/:id
@@ -254,12 +251,11 @@ todos.put(todoPath, checkAccept, checkContent, koaBody, async (ctx) => {
     console.error('Error occurred:', error);
     ctx.throw(500, error);
   }
-
 });
 
 // DELETE /resource/:id
 todos.del(todoPath, async (ctx) => {
-const { id } = ctx.params;
+  const { id } = ctx.params;
   console.log('.del id contains:', id);
 
   if (isNaN(id) || id.includes('.')) {
@@ -284,7 +280,6 @@ const { id } = ctx.params;
     console.error('Error occurred:', error);
     ctx.throw(500, error);
   }
-
 });
 
 
