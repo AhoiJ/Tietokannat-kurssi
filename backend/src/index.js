@@ -10,7 +10,9 @@ import { databaseReady } from './helpers';
 import { initDB } from './fixtures';
 
 import { testGet } from './apis/test/index';
-import { todosGetAll, todosGetSingle, post } from './todos/index';
+import {
+  todosGetAll, todosGetSingle, post, put, del,
+} from './todos/index';
 import {
   apiPath,
   todoPath,
@@ -72,87 +74,10 @@ todos.get(todoPath, todosGetSingle, checkAccept); // get resource by id  in  /to
 todos.post(todosPath, post, checkAccept, checkContent, koaBody); // POST is in /todos/post.js
 
 // PUT /resource/:id
-todos.put(todoPath, checkAccept, checkContent, koaBody, async (ctx) => {
-  const { id } = ctx.params;
-  const { text, done } = ctx.request.body;
-  console.log('.put id contains:', id);
-  console.log('.put text contains:', text);
-  console.log('.put done contains:', done);
-
-  if (isNaN(id) || id.includes('.')) {
-    ctx.throw(400, 'id must be an integer');
-  } else if (typeof text === 'undefined') {
-    ctx.throw(400, 'body.text is required');
-  } else if (typeof text !== 'string') {
-    ctx.throw(400, 'body.done must be string');
-  } else if (typeof done === 'undefined') {
-    ctx.throw(400, 'body.done is required');
-  } else if (typeof done !== 'boolean') {
-    ctx.throw(400, 'body.done must be boolean');
-  }
-
-  try {
-    const conn = await mysql.createConnection(connectionSettings);
-
-    // Update the todo
-    const [status] = await conn.execute(`
-           UPDATE todos
-           SET text = :text, done = :done
-           WHERE id = :id;
-         `, { id, text, done: Number(done) });
-
-    if (status.affectedRows === 0) {
-      // If the resource does not already exist, create it
-      await conn.execute(`
-          INSERT INTO todos (id, text, done)
-          VALUES (:id, :text, :done);
-        `, { id, text, done: Number(done) });
-    }
-
-    // Get the todo
-    const [data] = await conn.execute(`
-           SELECT *
-           FROM todos
-           WHERE id = :id;
-         `, { id });
-
-    // Return the resource
-    ctx.body = data[0];
-  } catch (error) {
-    console.error('Error occurred:', error);
-    ctx.throw(500, error);
-  }
-});
+todos.put(todoPath, put, checkAccept, checkContent, koaBody); // PUT is in /todos/put.js
 
 // DELETE /resource/:id
-todos.del(todoPath, async (ctx) => {
-  const { id } = ctx.params;
-  console.log('.del id contains:', id);
-
-  if (isNaN(id) || id.includes('.')) {
-    ctx.throw(400, 'id must be an integer');
-  }
-
-  try {
-    const conn = await mysql.createConnection(connectionSettings);
-    const [status] = await conn.execute(`
-          DELETE FROM todos
-          WHERE id = :id;
-        `, { id });
-
-    if (status.affectedRows === 0) {
-      // The row did not exist, return '404 Not found'
-      ctx.status = 404;
-    } else {
-      // Return '204 No Content' status code for successful delete
-      ctx.status = 204;
-    }
-  } catch (error) {
-    console.error('Error occurred:', error);
-    ctx.throw(500, error);
-  }
-});
-
+todos.del(todoPath, del);
 
 app.use(test.routes());
 app.use(test.allowedMethods());
