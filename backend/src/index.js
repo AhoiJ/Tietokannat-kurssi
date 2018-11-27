@@ -9,7 +9,14 @@ import { connectionSettings } from './settings';
 import { databaseReady } from './helpers';
 import { initDB } from './fixtures';
 
-import { testGet } from './apis/test/get';
+import { testGet } from './apis/test/index';
+import { todosGetAll, todosGetSingle, post } from './todos/index';
+import {
+  apiPath,
+  todoPath,
+  todosPath,
+} from './apis/index';
+
 
 // Initialize DB
 (async () => {
@@ -28,10 +35,8 @@ const koaBody = new KoaBody();
 const test = new Router();
 const todos = new Router();
 
-// Define API path
-const apiPath = '/api/v1';
 
-test.get(`${apiPath}/test`, testGet);
+test.get(`${apiPath}/test`, testGet); // in test/get.js
 
 // Middleware for checking accept headers
 const checkAccept = async (ctx, next) => {
@@ -57,132 +62,14 @@ const checkContent = async (ctx, next) => {
   await next();
 };
 
-// Define todos paths
-const todosPath = `${apiPath}/todos`;
-const todoPath = `${todosPath}/:id`;
-
 // GET /resource
-todos.get(todosPath, checkAccept, async (ctx) => {
-  const url = Url.parse(ctx.url, true);
-  const { sort } = url.query;
-
-  const parseSortQuery = ({ urlSortQuery, whitelist }) => {
-    let query = '';
-    if (urlSortQuery) {
-      const sortParams = urlSortQuery.split(',');
-
-      query = 'ORDER BY ';
-      sortParams.forEach((param, index) => {
-        let trimmedParam = param;
-        let desc = false;
-
-        if (param[0] === '-') {
-          // Remove the first character
-          trimmedParam = param.slice(1);
-          // Set descending to true
-          desc = true;
-        }
-
-        // If parameter is not whitelisted, ignore it
-        // This also prevents SQL injection even without statement preparation
-        if (!whitelist.includes(trimmedParam)) return;
-
-        // If this is not the first sort parameter, append ', '
-        if (index > 0) query = query.concat(', ');
-
-        // Append the name of the field
-        query = query.concat(trimmedParam);
-
-        if (desc) query = query.concat(' DESC');
-      });
-    }
-    return query;
-  };
-  const orderBy = parseSortQuery({ urlSortQuery: sort, whitelist: ['id', 'text', 'done'] });
-
-  try {
-    const conn = await mysql.createConnection(connectionSettings);
-    const [data] = await conn.execute(`
-        SELECT *
-        FROM todos
-        ${orderBy}
-      `);
-
-    // Return all todos
-    ctx.body = data;
-  } catch (error) {
-    console.error('Error occurred:', error);
-    ctx.throw(500, error);
-  }
-});
+todos.get(todosPath, todosGetAll, checkAccept); // Get All/ checkAccept function in /todos/getAll
 
 // GET /resource/:id
-todos.get(todoPath, checkAccept, async (ctx) => {
-  const { id } = ctx.params;
-  console.log('.get id contains:', id);
-
-  if (isNaN(id) || id.includes('.')) {
-    ctx.throw(400, 'id must be an integer');
-  }
-
-  try {
-    const conn = await mysql.createConnection(connectionSettings);
-    const [data] = await conn.execute(`
-          SELECT *
-          FROM todos
-          WHERE id = :id;
-        `, { id });
-
-    // Return the resource
-    ctx.body = data[0];
-  } catch (error) {
-    console.error('Error occurred:', error);
-    ctx.throw(500, error);
-  }
-});
+todos.get(todoPath, todosGetSingle, checkAccept); // get resource by id  in  /todos/getSingle
 
 // POST /resource
-todos.post(todosPath, checkAccept, checkContent, koaBody, async (ctx) => {
-  const { text } = ctx.request.body;
-  console.log('.post text contains:', text);
-
-  if (typeof text === 'undefined') {
-    ctx.throw(400, 'body.text is required');
-  } else if (typeof text !== 'string') {
-    ctx.throw(400, 'body.done must be string');
-  }
-
-  try {
-    const conn = await mysql.createConnection(connectionSettings);
-
-    // Insert a new todo
-    const [status] = await conn.execute(`
-          INSERT INTO todos (text)
-          VALUES (:text);
-        `, { text });
-    const { insertId } = status;
-
-    // Get the new todo
-    const [data] = await conn.execute(`
-          SELECT *
-          FROM todos
-          WHERE id = :id;
-        `, { id: insertId });
-
-    // Set the response header to 201 Created
-    ctx.status = 201;
-
-    // Set the Location header to point to the new resource
-    const newUrl = `${ctx.host}${Router.url(todoPath, { id: insertId })}`;
-    ctx.set('Location', newUrl);
-
-    // Return the new todo
-    ctx.body = data[0];
-  } catch (error) {
-    console.error('Error occurred:', error);
-    ctx.throw(500, error);
-  }
-});
+todos.post(todosPath, post, checkAccept, checkContent, koaBody); // POST is in /todos/post.js
 
 // PUT /resource/:id
 todos.put(todoPath, checkAccept, checkContent, koaBody, async (ctx) => {

@@ -1,9 +1,8 @@
 import mysql from 'mysql2/promise';
-
 import { connectionSettings } from '../../settings';
 
 
-export const testGet = async (ctx) => {
+export default async (ctx) => {
   try {
     const conn = await mysql.createConnection(connectionSettings);
     const [data] = await conn.execute(`
