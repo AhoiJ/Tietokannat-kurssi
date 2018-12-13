@@ -10,6 +10,7 @@ import { databaseReady } from './helpers';
 import { initDB } from './fixtures';
 
 import { testGet } from './apis/test/index';
+import { loanGet } from './apis/loansystem/index';
 import {
   todosGetAll, todosGetSingle, post, put, del,
 } from './todos/index';
@@ -17,6 +18,9 @@ import {
   apiPath,
   todoPath,
   todosPath,
+  equipmentsPath,
+  loansPath,
+  usersPath,
 } from './apis/index';
 
 import { checkAccept, checkContent } from './middleware/index';
@@ -38,9 +42,11 @@ const koaBody = new KoaBody();
 // Instantiate routers
 const test = new Router();
 const todos = new Router();
+const loansystem = new Router();
 
 
 test.get(`${apiPath}/test`, testGet); // in test/get.js
+loansystem.get(`${apiPath}/loansystem`, loanGet);// in loansystem/get.js
 
 // GET /resource
 todos.get(todosPath, todosGetAll, checkAccept); // Get All/ checkAccept function in /todos/getAll
