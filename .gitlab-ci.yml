@@ -1,5 +1,5 @@
 variables:
-  REMOTE_HOST: deploy@172.16.4.239
+  REMOTE_HOST: deploy@172.16.4.61
   REMOTE_DIR: nodejs-mysql-app
 
 stages:
@@ -36,10 +36,10 @@ build:
     - yarn install --prod
 
 deploy:
-  image: docker:1.12
+  image: docker:latest
   stage: deploy
   services:
-    - docker:1.12-dind
+    - docker:dind
   dependencies:
     - build
   script:
