@@ -6,7 +6,9 @@ import KoaBody from 'koa-bodyparser';
 import Url from 'url';
 
 import { connectionSettings } from './settings';
+import { loanConnectionSettings } from './loanSettings';
 import { databaseReady } from './helpers';
+import { loanDataBaseReady } from './helpers/loansystem';
 import { initDB } from './fixtures';
 
 import { testGet } from './apis/test/index';
@@ -14,6 +16,7 @@ import { loanGet } from './apis/loansystem/index';
 import {
   todosGetAll, todosGetSingle, post, put, del,
 } from './todos/index';
+
 import {
   apiPath,
   todoPath,
@@ -24,11 +27,12 @@ import {
 } from './apis/index';
 
 import { checkAccept, checkContent } from './middleware/index';
-
+import { loanCheckAccept, loanCheckContent } from './middleware/loansystem/index';
 
 // Initialize DB
 (async () => {
-  await databaseReady();
+  // await databaseReady();
+  await loanDataBaseReady();
   await initDB();
 })();
 
@@ -40,33 +44,34 @@ const app = new Koa();
 const koaBody = new KoaBody();
 
 // Instantiate routers
-const test = new Router();
-const todos = new Router();
+// const test = new Router();
+// const todos = new Router();
 const loansystem = new Router();
 
 
-test.get(`${apiPath}/test`, testGet); // in test/get.js
+// test.get(`${apiPath}/test`, testGet); // in test/get.js
 loansystem.get(`${apiPath}/loansystem`, loanGet);// in loansystem/get.js
 
 // GET /resource
-todos.get(todosPath, todosGetAll, checkAccept); // Get All/ checkAccept function in /todos/getAll
+// todos.get(todosPath, todosGetAll, checkAccept); // Get All/ checkAccept function in /todos/getAll
+loansystem.get();
 
 // GET /resource/:id
-todos.get(todoPath, todosGetSingle, checkAccept); // get resource by id  in  /todos/getSingle
+// todos.get(todoPath, todosGetSingle, checkAccept); // get resource by id  in  /todos/getSingle
 
 // POST /resource
-todos.post(todosPath, post, checkAccept, checkContent, koaBody); // POST is in /todos/post.js
+// todos.post(todosPath, post, checkAccept, checkContent, koaBody); // POST is in /todos/post.js
 
 // PUT /resource/:id
-todos.put(todoPath, put, checkAccept, checkContent, koaBody); // PUT is in /todos/put.js
+// todos.put(todoPath, put, checkAccept, checkContent, koaBody); // PUT is in /todos/put.js
 
 // DELETE /resource/:id
-todos.del(todoPath, del);
+// todos.del(todoPath, del);
 
-app.use(test.routes());
-app.use(test.allowedMethods());
-app.use(todos.routes());
-app.use(todos.allowedMethods());
+// app.use(test.routes());
+// app.use(test.allowedMethods());
+// app.use(todos.routes());
+// app.use(todos.allowedMethods());
 
 // Start the server and keep listening on port until stopped
 app.listen(port);

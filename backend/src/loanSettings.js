@@ -1,7 +1,7 @@
-export const connectionSettings = {
+export const loanConnectionSettings = {
   host: 'db',
   user: 'root',
-  database: 'db_1',
+  database: 'dbe5jaho52',
   password: 'db_rootpass',
   namedPlaceholders: true,
 };

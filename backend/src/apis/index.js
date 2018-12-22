@@ -4,8 +4,8 @@ import {
 
 export {
   apiPath,
-  todosPath,
   todoPath,
+  todosPath,
   loansPath,
   usersPath,
   equipmentsPath,

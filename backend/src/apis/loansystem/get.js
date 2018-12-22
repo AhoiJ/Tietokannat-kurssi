@@ -1,13 +1,13 @@
 import mysql from 'mysql2/promise';
-import { connectionSettings } from '../../settings';
+import { loanConnectionSettings } from '../../loanSettings';
 
 
 export default async (ctx) => {
   try {
-    const conn = await mysql.createConnection(connectionSettings);
+    const conn = await mysql.createConnection(loanConnectionSettings);
     const [data] = await conn.execute(`
           SELECT *
-          FROM dbe5jaho52
+          FROM henkilo, lainaus, laite, laite_kategoria, vastuu_henkilo 
         `);
 
     console.log('Data fetched:', data);

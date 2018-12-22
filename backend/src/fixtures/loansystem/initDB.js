@@ -1,9 +1,9 @@
 import mysql from 'mysql2/promise';
 
-import { connectionSettings } from '../../settings';
+import { loanConnectionSettings } from '../../loanSettings';
 
 export default async () => {
-  const conn = await mysql.createConnection(connectionSettings);
+  const conn = await mysql.createConnection(loanConnectionSettings);
   try {
     await conn.execute(`
         SELECT *

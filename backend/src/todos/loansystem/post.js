@@ -1,9 +1,9 @@
 import mysql from 'mysql2/promise';
 import Router from 'koa-router';
-import { todoPath } from '../apis/index';
-import { connectionSettings } from '../settings';
+import { usersPath } from '../../apis/index';
+import { loanConnectionSettings } from '../../loanSettings';
 
-
+// modify to take in henkilo data
 export default async (ctx) => {
   const { text } = ctx.request.body;
   console.log('.post text contains:', text);
@@ -15,9 +15,9 @@ export default async (ctx) => {
   }
 
   try {
-    const conn = await mysql.createConnection(connectionSettings);
+    const conn = await mysql.createConnection(loanConnectionSettings);
 
-    // Insert a new todo
+    // Insert a new henkilo
     const [status] = await conn.execute(`
             INSERT INTO todos (text)
             VALUES (:text);
