@@ -3,7 +3,7 @@ import Url from 'url';
 import { loanConnectionSettings } from '../../loanSettings';
 
 // ATM only works from henkilo, must add handling to other tables aswell
-// added test so getall works for 2 tables
+
 export default async (ctx) => {
   const url = Url.parse(ctx.url, true);
   const { sort } = url.query;
@@ -40,7 +40,7 @@ export default async (ctx) => {
     }
     return query;
   };
-  const orderBy = parseSortQuery({ urlSortQuery: sort, whitelist: ['id', 'text', 'done'] });
+  const orderBy = parseSortQuery({ urlSortQuery: sort, whitelist: ['id', 'fname', 'lname'] });
 
   try {
     const conn = await mysql.createConnection(loanConnectionSettings);
@@ -56,6 +56,7 @@ export default async (ctx) => {
     console.error('Error occurred:', error);
     ctx.throw(500, error);
   }
+  /*
   // Attempt at getting all data from multiple tables
   try {
     const conn = await mysql.createConnection(loanConnectionSettings);
@@ -71,4 +72,5 @@ export default async (ctx) => {
     console.error('Error occurred:', error);
     ctx.throw(500, error);
   }
+  */
 };

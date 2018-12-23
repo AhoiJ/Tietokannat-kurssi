@@ -1,7 +1,9 @@
-import loanGet from './get';
-
+import loanGetUser from './getUser';
+import loanGetEquipment from './getEquipment';
+import loanGetLoans from './getLoan';
 
 export {
-  loanGet,
-
+  loanGetUser,
+  loanGetEquipment,
+  loanGetLoans,
 };

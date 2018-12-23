@@ -5,29 +5,30 @@ import { loanConnectionSettings } from '../../loanSettings';
 
 // modify to take in henkilo data
 export default async (ctx) => {
-  const { text } = ctx.request.body;
-  console.log('.post text contains:', text);
+  const { id } = ctx.request.body;
+  console.log('.post id contains:', id);
 
-  if (typeof text === 'undefined') {
+  /* if (typeof text === 'undefined') {
     ctx.throw(400, 'body.text is required');
   } else if (typeof text !== 'string') {
     ctx.throw(400, 'body.done must be string');
   }
+   */
 
   try {
     const conn = await mysql.createConnection(loanConnectionSettings);
 
     // Insert a new henkilo
     const [status] = await conn.execute(`
-            INSERT INTO todos (text)
-            VALUES (:text);
-          `, { text });
+            INSERT INTO henkilo (id)
+            VALUES (:id);
+          `, { id });
     const { insertId } = status;
 
-    // Get the new todo
+    // Get the new henkilo
     const [data] = await conn.execute(`
             SELECT *
-            FROM todos
+            FROM henkilo
             WHERE id = :id;
           `, { id: insertId });
 
@@ -35,10 +36,10 @@ export default async (ctx) => {
     ctx.status = 201;
 
     // Set the Location header to point to the new resource
-    const newUrl = `${ctx.host}${Router.url(todoPath, { id: insertId })}`;
+    const newUrl = `${ctx.host}${Router.url(usersPath, { id: insertId })}`;
     ctx.set('Location', newUrl);
 
-    // Return the new todo
+    // Return the new henkilo
     ctx.body = data[0];
   } catch (error) {
     console.error('Error occurred:', error);
