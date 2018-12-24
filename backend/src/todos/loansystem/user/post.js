@@ -1,9 +1,9 @@
 import mysql from 'mysql2/promise';
 import Router from 'koa-router';
-import { usersPath } from '../../apis/index';
-import { loanConnectionSettings } from '../../loanSettings';
+import { usersPath } from '../../../apis/index';
+import { loanConnectionSettings } from '../../../loanSettings';
 
-// modify to take in henkilo data
+
 export default async (ctx) => {
   const { id } = ctx.request.body;
   console.log('.post id contains:', id);

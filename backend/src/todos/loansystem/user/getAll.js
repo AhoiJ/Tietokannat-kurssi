@@ -1,6 +1,6 @@
 import mysql from 'mysql2/promise';
 import Url from 'url';
-import { loanConnectionSettings } from '../../loanSettings';
+import { loanConnectionSettings } from '../../../loanSettings';
 
 // ATM only works from henkilo, must add handling to other tables aswell
 

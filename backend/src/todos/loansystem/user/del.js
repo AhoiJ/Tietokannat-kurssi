@@ -1,5 +1,5 @@
 import mysql from 'mysql2/promise';
-import { loanConnectionSettings } from '../../loanSettings';
+import { loanConnectionSettings } from '../../../loanSettings';
 
 // ATM only deletes from henkilo, must add deletion and handling to other tables aswell
 export default async (ctx) => {
