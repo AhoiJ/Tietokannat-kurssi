@@ -22,7 +22,11 @@ import {
 } from './todos/loansystem/user/index'; // missing userPut for now
 import {
   equipmentGetAll, equipmentGetSingle, equipmentPost, equipmentDel,
-} from './todos/loansystem/equipment/index';
+} from './todos/loansystem/equipment/index'; // missing equipmentPut for now
+import {
+  loanGetAll, loanGetSingle, loanPost, loanDel,
+} from './todos/loansystem/loan/index';
+
 
 import {
   apiPath,
@@ -68,18 +72,20 @@ const loansystem = new Router();
 // GET /resource
 // todos.get(todosPath, todosGetAll, checkAccept); // Get All/ checkAccept function in /todos/getAll
 loansystem.get(usersPath, userGetAll, loanCheckAccept);
-// loansystem.get(loansPath, loanGetAll, loanCheckAccept);
+loansystem.get(loansPath, loanGetAll, loanCheckAccept);
 loansystem.get(equipmentsPath, equipmentGetAll, loanCheckAccept);
 
 // GET /resource/:id
 // todos.get(todoPath, todosGetSingle, checkAccept); // get resource by id  in  /todos/getSingle
 loansystem.get(userPath, userGetSingle, loanCheckAccept);
 loansystem.get(equipmentPath, equipmentGetSingle, loanCheckAccept);
+loansystem.get(loanPath, loanGetSingle, loanCheckAccept);
 
 // POST /resource
 // todos.post(todosPath, post, checkAccept, checkContent, koaBody); // POST is in /todos/post.js
 loansystem.post(usersPath, userPost, loanCheckAccept, loanCheckContent, koaBody);
 loansystem.post(equipmentsPath, equipmentPost, loanCheckAccept, loanCheckContent, koaBody);
+loansystem.post(loansPath, loanPost, loanCheckAccept, loanCheckContent, koaBody);
 
 // PUT /resource/:id
 // todos.put(todoPath, put, checkAccept, checkContent, koaBody); // PUT is in /todos/put.js
@@ -89,6 +95,7 @@ loansystem.post(equipmentsPath, equipmentPost, loanCheckAccept, loanCheckContent
 // todos.del(todoPath, del);
 loansystem.del(userPath, userDel);
 loansystem.del(equipmentPath, equipmentDel);
+loansystem.del(loanPath, loanDel);
 
 // app.use(test.routes());
 // app.use(test.allowedMethods());

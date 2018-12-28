@@ -5,8 +5,13 @@ import { loanConnectionSettings } from '../../../loanSettings';
 
 
 export default async (ctx) => {
-  const { fname, lname } = ctx.request.body;
-  console.log('.post contains:', fname, lname);
+  const {
+    // eslint-disable-next-line camelcase
+    laite_id, lainaaja_id, luovutus_id, vastaanotto_id, lainaus_pvm, era_pvm, palautus_pvm,
+    // eslint-disable-next-line camelcase
+    kunto_palautettaessa,
+  } = ctx.request.body;
+  console.log('.post contains:', laite_id, lainaaja_id, luovutus_id, vastaanotto_id, lainaus_pvm, era_pvm, palautus_pvm, kunto_palautettaessa);
 
   /* if (typeof text === 'undefined') {
     ctx.throw(400, 'body.text is required');
@@ -20,15 +25,24 @@ export default async (ctx) => {
 
     // Insert a new henkilo
     const [status] = await conn.execute(`
-            INSERT INTO henkilo (fname, lname)
-            VALUES (:fname, :lname);
-          `, { fname, lname });
+            INSERT INTO lainaus (laite_id, lainaaja_id, luovutus_id,vastaanotto_id, lainaus_pvm, era_pvm, palautus_pvm, kunto_palautettaessa)
+            VALUES (:laite_id, :lainaaja_id, :luovutus_id, :vastaanotto_id, :lainaus_pvm, :era_pvm, :palautus_pvm, :kunto_palautettaessa;
+          `, {
+      laite_id,
+      lainaaja_id,
+      luovutus_id,
+      vastaanotto_id,
+      lainaus_pvm,
+      era_pvm,
+      palautus_pvm,
+      kunto_palautettaessa,
+    });
     const { insertId } = status;
 
     // Get the new henkilo
     const [data] = await conn.execute(`
             SELECT *
-            FROM henkilo
+            FROM lainaus
             WHERE id = :id;
           `, { id: insertId });
 
