@@ -1,6 +1,6 @@
 import mysql from 'mysql2/promise';
 import Router from 'koa-router';
-import { usersPath } from '../../../apis/index';
+import { loansPath } from '../../../apis/index';
 import { loanConnectionSettings } from '../../../loanSettings';
 
 
@@ -23,10 +23,10 @@ export default async (ctx) => {
   try {
     const conn = await mysql.createConnection(loanConnectionSettings);
 
-    // Insert a new henkilo
+    // Insert a new loan
     const [status] = await conn.execute(`
-            INSERT INTO lainaus (laite_id, lainaaja_id, luovutus_id,vastaanotto_id, lainaus_pvm, era_pvm, palautus_pvm, kunto_palautettaessa)
-            VALUES (:laite_id, :lainaaja_id, :luovutus_id, :vastaanotto_id, :lainaus_pvm, :era_pvm, :palautus_pvm, :kunto_palautettaessa;
+            INSERT INTO lainaus (laite_id, lainaaja_id, luovutus_id, vastaanotto_id, lainaus_pvm, era_pvm, palautus_pvm, kunto_palautettaessa)
+            VALUES (:laite_id, :lainaaja_id, :luovutus_id, :vastaanotto_id, :lainaus_pvm, :era_pvm, :palautus_pvm, :kunto_palautettaessa);
           `, {
       laite_id,
       lainaaja_id,
@@ -39,7 +39,7 @@ export default async (ctx) => {
     });
     const { insertId } = status;
 
-    // Get the new henkilo
+    // Get the new loan
     const [data] = await conn.execute(`
             SELECT *
             FROM lainaus
@@ -50,10 +50,10 @@ export default async (ctx) => {
     ctx.status = 201;
 
     // Set the Location header to point to the new resource
-    const newUrl = `${ctx.host}${Router.url(usersPath, { id: insertId })}`;
+    const newUrl = `${ctx.host}${Router.url(loansPath, { id: insertId })}`;
     ctx.set('Location', newUrl);
 
-    // Return the new henkilo
+    // Return the new loan
     ctx.body = data[0];
   } catch (error) {
     console.error('Error occurred:', error);

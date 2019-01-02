@@ -4,9 +4,8 @@ import { equipmentsPath } from '../../../apis';
 import { loanConnectionSettings } from '../../../loanSettings';
 
 export default async (ctx) => {
-  const { sarjanumero } = ctx.request.body;
-  const { kunto } = ctx.request.body;
-  console.log('.post contains:', sarjanumero);
+  const { sarjanumero, kunto } = ctx.request.body;
+  console.log('.post contains:', sarjanumero, kunto);
 
   if (typeof sarjanumero === 'undefined') {
     ctx.throw(400, 'body.text is required');
@@ -14,15 +13,14 @@ export default async (ctx) => {
     ctx.throw(400, 'body.done must be string');
   }
 
-
   try {
     const conn = await mysql.createConnection(loanConnectionSettings);
 
     // Insert a new laite
     const [status] = await conn.execute(`
-            INSERT INTO laite (sarjanumero)
-            VALUES ( :sarjanumero);
-          `, { sarjanumero });
+            INSERT INTO laite (sarjanumero, kunto)
+            VALUES ( :sarjanumero, :kunto);
+          `, { sarjanumero, kunto });
     const { insertId } = status;
 
     // Get the new laite

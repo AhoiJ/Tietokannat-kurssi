@@ -4,10 +4,10 @@ import { loanConnectionSettings } from '../../../loanSettings';
 
 export default async (ctx) => {
   const { id } = ctx.params;
-  const { fname, lname } = ctx.request.body;
-  // console.log('.put id contains:', id);
-  // console.log('.put text contains:', text);
-  // console.log('.put done contains:', done);
+  const { sarjanumero, kunto } = ctx.request.body;
+  console.log('.put id contains:', id);
+  console.log('.put sarjanumero contains:', sarjanumero);
+  console.log('.put kunto contains:', kunto);
 
   if (isNaN(id) || id.includes('.')) {
     ctx.throw(400, 'id must be an integer');
@@ -26,25 +26,25 @@ export default async (ctx) => {
   try {
     const conn = await mysql.createConnection(loanConnectionSettings);
 
-    // Update the user
+    // Update the equipment
     const [status] = await conn.execute(`
-             UPDATE henkilo
-             SET fname = :fname, lname = :lname
+             UPDATE laite
+             SET sarjanumero = :sarjanumero, kunto = :kunto
              WHERE id = :id;
-           `, { id, fname, lname });
+           `, { id, sarjanumero, kunto });
 
     if (status.affectedRows === 0) {
       // If the resource does not already exist, create it
       await conn.execute(`
-            INSERT INTO henkilo (id, fname, lname)
-            VALUES (:id, :fname, :lname);
-          `, { id, fname, lname });
+            INSERT INTO laite (id, sarjanumero, kunto)
+            VALUES (:id, :sarjanumero, :kunto);
+          `, { id, sarjanumero, kunto });
     }
 
-    // Get the user
+    // Get the equipment
     const [data] = await conn.execute(`
              SELECT *
-             FROM henkilo
+             FROM laite
              WHERE id = :id;
            `, { id });
 

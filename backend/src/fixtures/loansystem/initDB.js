@@ -39,7 +39,7 @@ export default async () => {
           laite_id int UNSIGNED NOT NULL,
           lainaaja_id int UNSIGNED NOT NULL,
           luovutus_id int UNSIGNED NOT NULL,
-          vastaanotto_id int ,
+          vastaanotto_id int UNSIGNED NOT NULL,
           lainaus_pvm DATE,
           era_pvm DATE,
           palautus_pvm DATE,

@@ -19,15 +19,13 @@ import {
 } from './todos/index';
 import {
   userGetAll, userGetSingle, userPost, userDel, userPut,
-} from './todos/loansystem/user/index'; // missing userPut for now
+} from './todos/loansystem/user/index';
 import {
-  equipmentGetAll, equipmentGetSingle, equipmentPost, equipmentDel,
-} from './todos/loansystem/equipment/index'; // missing equipmentPut for now
+  equipmentGetAll, equipmentGetSingle, equipmentPost, equipmentDel, equipmentPut,
+} from './todos/loansystem/equipment/index';
 import {
-  loanGetAll, loanGetSingle, loanPost, loanDel,
+  loanGetAll, loanGetSingle, loanPost, loanDel, loanPut,
 } from './todos/loansystem/loan/index';
-
-
 import {
   apiPath,
   todoPath,
@@ -84,12 +82,14 @@ loansystem.get(loanPath, loanGetSingle, loanCheckAccept);
 // POST /resource
 // todos.post(todosPath, post, checkAccept, checkContent, koaBody); // POST is in /todos/post.js
 loansystem.post(usersPath, loanCheckAccept, loanCheckContent, koaBody, userPost);
-// loansystem.post(equipmentsPath, loanCheckAccept, loanCheckContent, koaBody);
-// loansystem.post(loansPath, loanCheckAccept, loanCheckContent, koaBody);
+loansystem.post(equipmentsPath, loanCheckAccept, loanCheckContent, koaBody, equipmentPost);
+loansystem.post(loansPath, loanCheckAccept, loanCheckContent, koaBody, loanPost);
 
 // PUT /resource/:id
 // todos.put(todoPath, put, checkAccept, checkContent, koaBody); // PUT is in /todos/put.js
 loansystem.put(userPath, loanCheckAccept, loanCheckContent, koaBody, userPut);
+loansystem.put(equipmentPath, loanCheckAccept, loanCheckContent, koaBody, equipmentPut);
+loansystem.put(loanPath, loanCheckAccept, loanCheckContent, koaBody, loanPut);
 
 // DELETE /resource/:id
 // todos.del(todoPath, del);

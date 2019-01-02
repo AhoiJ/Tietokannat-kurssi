@@ -1,7 +1,7 @@
 import loanGetAll from './getAll';
 import loanGetSingle from './getSingle';
 import loanPost from './post';
-// import loanPut from './put';
+import loanPut from './put';
 import loanDel from './del';
 
 export {
@@ -9,6 +9,6 @@ export {
   loanGetAll,
   loanGetSingle,
   loanPost,
-  // loanPut,
+  loanPut,
   loanDel,
 };
