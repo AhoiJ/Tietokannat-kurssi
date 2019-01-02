@@ -1,12 +1,10 @@
-/*      Not yet relevant
-
 import mysql from 'mysql2/promise';
-import { loanConnectionSettings } from '../../loanSettings';
+import { loanConnectionSettings } from '../../../loanSettings';
 
 
 export default async (ctx) => {
   const { id } = ctx.params;
-  // const { text, done } = ctx.request.body;
+  const { fname, lname } = ctx.request.body;
   // console.log('.put id contains:', id);
   // console.log('.put text contains:', text);
   // console.log('.put done contains:', done);
@@ -23,31 +21,30 @@ export default async (ctx) => {
   } else if (typeof done !== 'boolean') {
     ctx.throw(400, 'body.done must be boolean');
 */
-/*
   }
 
   try {
     const conn = await mysql.createConnection(loanConnectionSettings);
 
-    // Update the todo
+    // Update the user
     const [status] = await conn.execute(`
-             UPDATE todos
-             SET text = :text, done = :done
+             UPDATE henkilo
+             SET fname = :fname, lname = :lname
              WHERE id = :id;
-           `, { id, text, done: Number(done) });
+           `, { id, fname, lname });
 
     if (status.affectedRows === 0) {
       // If the resource does not already exist, create it
       await conn.execute(`
             INSERT INTO todos (id, text, done)
             VALUES (:id, :text, :done);
-          `, { id, text, done: Number(done) });
+          `, { id, fname, lname });
     }
 
-    // Get the todo
+    // Get the user
     const [data] = await conn.execute(`
              SELECT *
-             FROM todos
+             FROM henkilo
              WHERE id = :id;
            `, { id });
 
@@ -58,4 +55,3 @@ export default async (ctx) => {
     ctx.throw(500, error);
   }
 };
-*/

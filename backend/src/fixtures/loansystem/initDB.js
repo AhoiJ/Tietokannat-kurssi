@@ -16,8 +16,8 @@ export default async () => {
       await conn.execute(`
         CREATE TABLE henkilo (
           id int UNSIGNED NOT NULL AUTO_INCREMENT,
-          fname varchar(45) NOT NULL,
-          lname varchar(45) NOT NULL,
+          fname varchar(255) NOT NULL,
+          lname varchar(255) NOT NULL,
           PRIMARY KEY (id)
         )
       `);
@@ -43,7 +43,7 @@ export default async () => {
           lainaus_pvm DATE,
           era_pvm DATE,
           palautus_pvm DATE,
-          kunto_palautettaessa varchar(45) NOT NULL,
+          kunto_palautettaessa varchar(255) NOT NULL,
           PRIMARY KEY (id, laite_id, lainaaja_id, luovutus_id, vastaanotto_id)
         )
       `);
@@ -62,8 +62,8 @@ export default async () => {
       await conn.execute(`
         CREATE TABLE laite (
           id int UNSIGNED AUTO_INCREMENT,
-          sarjanumero varchar(45) NOT NULL,
-          kunto varchar(45) NOT NULL,
+          sarjanumero varchar(255) NOT NULL,
+          kunto varchar(255) NOT NULL,
           PRIMARY KEY (id)
         )
       `);
@@ -82,9 +82,9 @@ export default async () => {
       await conn.execute(`
         CREATE TABLE laite_kategoria (
           id int UNSIGNED AUTO_INCREMENT,
-          nimi varchar(45) NOT NULL,
-          tyyppi varchar(45) NOT NULL,
-          kuvaus varchar(45) NOT NULL,
+          nimi varchar(255) NOT NULL,
+          tyyppi varchar(255) NOT NULL,
+          kuvaus varchar(255) NOT NULL,
           PRIMARY KEY (id)
         )
       `);

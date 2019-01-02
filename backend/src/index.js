@@ -18,7 +18,7 @@ import {
   todosGetAll, todosGetSingle, post, put, del,
 } from './todos/index';
 import {
-  userGetAll, userGetSingle, userPost, userDel,
+  userGetAll, userGetSingle, userPost, userDel, userPut,
 } from './todos/loansystem/user/index'; // missing userPut for now
 import {
   equipmentGetAll, equipmentGetSingle, equipmentPost, equipmentDel,
@@ -40,7 +40,7 @@ import {
   equipmentPath,
 } from './apis/index';
 
-import { checkAccept, checkContent } from './middleware/index';
+// import { checkAccept, checkContent } from './middleware/index';
 import { loanCheckAccept, loanCheckContent } from './middleware/loansystem/index';
 
 // Initialize DB
@@ -83,13 +83,13 @@ loansystem.get(loanPath, loanGetSingle, loanCheckAccept);
 
 // POST /resource
 // todos.post(todosPath, post, checkAccept, checkContent, koaBody); // POST is in /todos/post.js
-loansystem.post(usersPath, userPost, loanCheckAccept, loanCheckContent, koaBody);
-loansystem.post(equipmentsPath, equipmentPost, loanCheckAccept, loanCheckContent, koaBody);
-loansystem.post(loansPath, loanPost, loanCheckAccept, loanCheckContent, koaBody);
+loansystem.post(usersPath, loanCheckAccept, loanCheckContent, koaBody, userPost);
+// loansystem.post(equipmentsPath, loanCheckAccept, loanCheckContent, koaBody);
+// loansystem.post(loansPath, loanCheckAccept, loanCheckContent, koaBody);
 
 // PUT /resource/:id
 // todos.put(todoPath, put, checkAccept, checkContent, koaBody); // PUT is in /todos/put.js
-/*  loansystem.put(); not yet functional */
+loansystem.put(userPath, loanCheckAccept, loanCheckContent, koaBody, userPut);
 
 // DELETE /resource/:id
 // todos.del(todoPath, del);
