@@ -10,6 +10,8 @@
 4. Helpers kansio
 5. Middleware kansio
 6. Todos kansio
+7. Index.js
+8. loanSettings.js
 
 ----
 
@@ -34,15 +36,15 @@ Nämä tiedostot tarkistavat hyväksyykö client response tyyppiä 'application/
 
 ### todos kansio
 Todos kansio sisältää kolme alikansiota, equipment, loan ja user. Nämä kaikki sisältävät jokaiselle taululle omat getAll, getSingle, post, put ja del funktiot.
-#### getAll
+###### getAll
 getAll - funktio hakee pyydetystä taulusta kaikki tiedot. Se sisältää myös metodin jolla listan hakemisjärjestystä voi muuttaa.
-#### getSingle
+###### getSingle
 getSingle - funktio hakee taulusta yhden merkinnän tiedot id:n perusteella.
-#### post
+###### post
 post - funktio hoitaa uuden sisällön lisäämisen tauluihin.
-#### put
+###### put
 put - funktiolla voidaan aiempaa sisältöä muokata. Jos sisällön muokkauksessa referensoi id:tä jota ei vielä ole taulukossa, put - funktio luo sellaisen kohdan taulukkoon.
-#### del 
+###### del 
 del - funktio poistaa pyynnössä id:llä määritellyn kohdan taulukosta
 
 ### Index.js
