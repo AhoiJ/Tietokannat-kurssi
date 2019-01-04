@@ -11,7 +11,8 @@
 5. Middleware kansio
 6. Todos kansio
 7. Index.js
-8. loanSettings.js
+8. LoanSettings.js
+9. Liitteet
 
 ----
 
@@ -52,3 +53,25 @@ Tämä repositorion juuressa oleva index.js kutsuu kaikkia työssä käytettyjä
 
 ### loanSettings.js
 loanSettings sisältää tietokannan käynnistyksessä tarvittavat tiedot.
+
+### Liitteet
+
+insert into henkilo (id, fname, lname) values ("1", "Jere", "Aho");
+insert into henkilo (id, fname, lname) values ("2", "Manu", "Maiskuttelija");
+insert into henkilo (id, fname, lname) values ("3", "pööpö", "pööpöilijä");
+
+insert into laite (id, kategoria_id, sarjanumero, kunto) values ("1", "1", "12345", "hyvä");
+insert into laite (id, kategoria_id, sarjanumero, kunto) values ("2", "2", "67891", "ok");
+
+insert into lainaus (id, laite_id, lainaaja_id, luovutus_id, vastaanotto_id, lainaus_pvm, era_pvm, palautus_pvm, kunto_palautettaessa) values ("1", "1", "1", "2", "3", "2018.12.11", "2018.12.12", "2018.12.11", "OK");
+insert into lainaus (id, laite_id, lainaaja_id, luovutus_id, vastaanotto_id, lainaus_pvm, era_pvm, palautus_pvm, kunto_palautettaessa) values ("2", "2", "1", "2", "3", "2018.11.01", "2018.11.15", "2018.11.14", "hyvä");
+
+insert into laite_kategoria (id, nimi, tyyppi, kuvaus)
+values ('1', 'lappari', 'kannettava', 'tyokone');
+insert into laite_kategoria (id, nimi, tyyppi, kuvaus)
+values ('2', 'tapletti', '10 inch tablet', 'viihde');
+
+insert into vastuu_henkilo (henkilo_id, laite_kategoria_id)
+values ('2', '1');
+insert into vastuu_henkilo (henkilo_id, laite_kategoria_id)
+values ('3', '2');
