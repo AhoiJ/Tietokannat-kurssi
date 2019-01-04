@@ -1,7 +1,17 @@
-import { apiPath, todosPath, todoPath } from './constants';
+import {
+  apiPath, todosPath, todoPath, usersPath, loansPath, equipmentsPath,
+  userPath, loanPath, equipmentPath,
+} from './constants';
+
 
 export {
   apiPath,
-  todosPath,
   todoPath,
+  todosPath,
+  loansPath,
+  usersPath,
+  equipmentsPath,
+  userPath,
+  loanPath,
+  equipmentPath,
 };
