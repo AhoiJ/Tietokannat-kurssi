@@ -55,7 +55,7 @@ Tämä repositorion juuressa oleva index.js kutsuu kaikkia työssä käytettyjä
 loanSettings sisältää tietokannan käynnistyksessä tarvittavat tiedot.
 
 ### Liitteet
-###### Esimerkidata
+###### Esimerkkidata
 
 insert into henkilo (id, fname, lname) values ("1", "Jere", "Aho");
 insert into henkilo (id, fname, lname) values ("2", "Manu", "Maiskuttelija");
