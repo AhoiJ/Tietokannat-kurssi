@@ -4,8 +4,9 @@ import { equipmentsPath } from '../../../apis';
 import { loanConnectionSettings } from '../../../loanSettings';
 
 export default async (ctx) => {
-  const { sarjanumero, kunto } = ctx.request.body;
-  console.log('.post contains:', sarjanumero, kunto);
+  // eslint-disable-next-line camelcase
+  const { kategoria_id, sarjanumero, kunto } = ctx.request.body;
+  console.log('.post contains:', kategoria_id, sarjanumero, kunto);
 
   if (typeof sarjanumero === 'undefined') {
     ctx.throw(400, 'body.text is required');
@@ -18,9 +19,9 @@ export default async (ctx) => {
 
     // Insert a new laite
     const [status] = await conn.execute(`
-            INSERT INTO laite (sarjanumero, kunto)
-            VALUES ( :sarjanumero, :kunto);
-          `, { sarjanumero, kunto });
+            INSERT INTO laite (kategoria_id, sarjanumero, kunto)
+            VALUES ( :kategoria_id, :sarjanumero, :kunto);
+          `, { kategoria_id, sarjanumero, kunto });
     const { insertId } = status;
 
     // Get the new laite

@@ -4,8 +4,10 @@ import { loanConnectionSettings } from '../../../loanSettings';
 
 export default async (ctx) => {
   const { id } = ctx.params;
-  const { sarjanumero, kunto } = ctx.request.body;
+  // eslint-disable-next-line camelcase
+  const { kategoria_id, sarjanumero, kunto } = ctx.request.body;
   console.log('.put id contains:', id);
+  console.log('put.kategoria_id contains:', kategoria_id);
   console.log('.put sarjanumero contains:', sarjanumero);
   console.log('.put kunto contains:', kunto);
 
@@ -29,16 +31,20 @@ export default async (ctx) => {
     // Update the equipment
     const [status] = await conn.execute(`
              UPDATE laite
-             SET sarjanumero = :sarjanumero, kunto = :kunto
+             SET kategoria_id = :kategoria_id, sarjanumero = :sarjanumero, kunto = :kunto
              WHERE id = :id;
-           `, { id, sarjanumero, kunto });
+           `, {
+      id, kategoria_id, sarjanumero, kunto,
+    });
 
     if (status.affectedRows === 0) {
       // If the resource does not already exist, create it
       await conn.execute(`
-            INSERT INTO laite (id, sarjanumero, kunto)
-            VALUES (:id, :sarjanumero, :kunto);
-          `, { id, sarjanumero, kunto });
+            INSERT INTO laite (id, kategoria_id, sarjanumero, kunto)
+            VALUES (:id, :kategoria_id, :sarjanumero, :kunto);
+          `, {
+        id, kategoria_id, sarjanumero, kunto,
+      });
     }
 
     // Get the equipment

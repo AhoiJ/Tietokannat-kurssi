@@ -56,21 +56,4 @@ export default async (ctx) => {
     console.error('Error occurred:', error);
     ctx.throw(500, error);
   }
-  /*
-  // Attempt at getting all data from multiple tables
-  try {
-    const conn = await mysql.createConnection(loanConnectionSettings);
-    const [data] = await conn.execute(`
-          SELECT *
-          FROM lainaus
-          ${orderBy}
-        `);
-
-    // Return all lainaus data
-    ctx.body = data;
-  } catch (error) {
-    console.error('Error occurred:', error);
-    ctx.throw(500, error);
-  }
-  */
 };

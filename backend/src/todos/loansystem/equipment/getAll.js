@@ -40,7 +40,7 @@ export default async (ctx) => {
     }
     return query;
   };
-  const orderBy = parseSortQuery({ urlSortQuery: sort, whitelist: ['id', 'sarjanumero', 'kunto'] });
+  const orderBy = parseSortQuery({ urlSortQuery: sort, whitelist: ['id', 'kategoria_id', 'sarjanumero', 'kunto'] });
 
   try {
     const conn = await mysql.createConnection(loanConnectionSettings);
