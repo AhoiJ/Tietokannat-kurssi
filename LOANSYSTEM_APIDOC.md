@@ -1,8 +1,8 @@
-##Lainausjärjestelmä
+## Lainausjärjestelmä
 
 ----
 
-## On this page
+## Tässä dokumentissa
 {:.no_toc}
 
 - TOC
