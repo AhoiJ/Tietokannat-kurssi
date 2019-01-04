@@ -3,10 +3,11 @@
 ----
 
 ## Tässä dokumentissa
-{:.no_toc}
 
-- TOC
-{:toc}
+1. apis kansio
+2. fixtures kansio
+3. helpers kansio
+4. 
 
 ----
 
