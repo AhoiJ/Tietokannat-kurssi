@@ -62,6 +62,7 @@ export default async () => {
       await conn.execute(`
         CREATE TABLE laite (
           id int UNSIGNED AUTO_INCREMENT,
+          kategoria_id int UNSIGNED NOT NULL,
           sarjanumero varchar(255) NOT NULL,
           kunto varchar(255) NOT NULL,
           PRIMARY KEY (id)
